@@ -1,0 +1,65 @@
+#content
+	{
+		text-align: left;
+		margin-top: 150px;
+		margin-left: 200px;
+
+	}
+
+	.btn{
+				background-color: #06265b;
+				color: #ffffcc;
+				outline: 0px;
+                box-shadow: 10px 18px 15px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                font-size: 18px;
+                padding-left: 10px;
+                padding-right: 10px;
+
+        }
+
+    .btn:hover{
+    	background-color: #ffffcc;
+    	color: #06265b;
+    }
+
+
+	#heading
+	{
+		color: #ffffcc;
+		font-family: "algerian";
+		text-align:left;
+		margin-top: 50px;
+		margin-left: 200px;
+	}
+
+	#list
+	{
+		text-align: left;
+		margin-top:100px;
+		margin-left: 200px;	
+		color: #ffffcc;
+
+	}
+
+	#logOut{
+				background-color:#06265b;
+				color: #ffffcc;
+				margin-left: 1100px;
+				font-size: 14px;
+				padding-right: 20px;
+				padding-left: 20px;	
+				padding-top: 5px;
+				padding-bottom: 5px;
+				border-radius: 10px;
+			}
+
+	#welcome
+	{
+		font-size: 15;
+		font-style: italic;
+		margin-top:60px;
+		margin-left: 30px;
+		color: #ffffcc;
+
+	}

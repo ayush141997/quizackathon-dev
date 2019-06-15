@@ -1,0 +1,30 @@
+<!--DOCTYPE HTML-->
+
+<html>
+
+<head>
+		<link rel="stylesheet" type="text/css" href="./assets/css/adminDashboard.css">
+</head>
+<body background = "./assets/images/export.png">
+	<label id= "welcome"> Welcome </label>
+	<input id="logOut" type="button" value="LogOut" onclick="javascript:void(window.location.href = 'admin')"> 
+	<h1 id="heading"> LeaderBoard</h1> 
+	<div>
+		<table id="list"></table>
+	</div>
+    <div id="content">
+    <input type="button" class="btn" id="first" onclick="firstPage()" value="first" />
+    <input type="button" class="btn" id="next" onclick="nextPage()" value="next" />
+    <input type="button" class="btn" id="previous" onclick="previousPage()" value="previous" />
+    <input type="button" class="btn" id="last" onclick="lastPage()" value="last" />
+	</div>
+    
+    
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="./assets/js/adminDashboard.js">
+    
+</script>
+
+</html>

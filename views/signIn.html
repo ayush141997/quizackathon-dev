@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id"
+        content="88309896082-jmp2gtil51ncbim717g15l3jfl8g5bug.apps.googleusercontent.com">
+    <title>Qizackathon</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/login.css">
+</head>
+
+<body>
+    <div class="login row">
+        <div class="row">
+            <div class="col s4"></div>
+            <center>
+                <div class="col s4">
+                    <h4> LOGIN </h4>
+                </div>
+            </center>
+        </div>
+        <div class="row">
+            <div class="col s4"></div>
+            <center>
+                <form action="signIn" method="POST" class="loginForm col s4">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email" type="text" class="validate" name="email">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="password" type="password" name="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="mode" value="normal">
+                    <div class="row">
+                        <div class="col s4">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+                        </div>
+                        <div class="col s4">Or</div>
+                        <div class="g-signin2 col s4" data-onsuccess="onSignIn"></div>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </div>
+    <div class="row">
+        <center>
+            <div class="col s12">
+                <button class="btn waves-effect waves-light" name="register" onclick="javascript:void(window.location.href='register')">Register</button>
+            </div>
+        </center>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./assets/js/login.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+{
+    "port" : 8081,
+    "dbConfig" : {
+        "host" : "mongodb+srv://hackUser:hack@123@cluster0-ajvun.mongodb.net/HackathonQuizGame?retryWrites=true&w=majority",
+        "options" : {
+            "useNewUrlParser": true,
+            "reconnectTries": 2,
+            "useCreateIndex": true
+          }
+    }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
+</head>
+
+<body>
+    <div class="register row">
+        <div class="row">
+            <div class="col s4"></div>
+            <center>
+                <div class="col s4">
+                    <h4> Register </h4>
+                </div>
+            </center>
+        </div>
+        <div class="row">
+            <div class="col s4"></div>
+            <center>
+                <form action="registerUser" method="POST" class="registerForm col s4">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="name" type="text" class="validate" name="name">
+                            <label for="name">Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email" type="text" class="validate" name="email">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="password" type="password" name="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="cpassword" type="password" name="cpassword" class="validate" onkeyup="check()">
+                            <label for="cpassword">Confirm Password</label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="mode" value="normal">
+                    <div class="row">
+                        <div class="col s4"></div>
+                        <div class="col s4"><button id="regSubmit" class="btn waves-effect waves-light" type="submit" name="action" disabled>Submit</button></div>
+                        <div class="col s4"></div>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./assets/js/register.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+</body>
+
+</html>

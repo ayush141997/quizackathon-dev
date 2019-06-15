@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/questions.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container" id="start">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="startText">Click on begin to start quiz</h3>
+                <a class="waves-effect waves-light btn" onclick="getQuestions()">Begin<i
+                        class="material-icons right">send</i></a>
+            </div>
+        </div>
+    </div>
+    <!-- MultiStep Form -->
+    <div class="container" id="questionContainer">
+        <div class="row">
+            <div class="col-md-6 text-left" id="clockdiv" style="font-size: 25px; color:#ffffcc;"></div>
+            <div class="col-md-6 text-right">
+                <a class="waves-effect waves-light btn" onclick="submit()">Submit<i
+                        class="material-icons right">send</i></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form id="msform">
+                    <!-- progressbar -->
+                    <ul id="progressbar">
+                        <li class="active"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <!-- fieldsets -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.MultiStep Form -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./assets/js/questions.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+</body>
+
+</html>

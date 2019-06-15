@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="google-signin-client_id"
+		content="88309896082-jmp2gtil51ncbim717g15l3jfl8g5bug.apps.googleusercontent.com">
+	<title>Document</title>
+	<link rel="stylesheet" href="./assets/css/dashboard.css">
+</head>
+
+<body background="./assets/images/bkg.jpg">
+	<label id="welcome"> Welcome </label>
+	<input id="logOut" type="button" value="LogOut" onclick="signOut();">
+
+	<p id="selection">Choose Your Category:</p>
+
+	<div id="content">
+		<div><input type="button" class="Btn1" value="          Entertainment          " onclick="javascript:void(window.location.href = 'quiz?entertainment')" />
+			<input type="button" class="Btn1" value="              Sports            " onclick="javascript:void(window.location.href = 'quiz?sports')" />
+		</div>
+		<div><input type="button" class="Btn2" value="        Current Affairs           " onclick="javascript:void(window.location.href = 'quiz?currAff')" />
+			<input type="button" class="Btn2" value="Information Technology" onclick="javascript:void(window.location.href = 'quiz?csit')" /></div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+	<script src="./assets/js/login.js"></script>
+	<script>
+		console.log(name)
+	</script>
+</body>
+
+</html>
