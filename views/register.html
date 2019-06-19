@@ -25,28 +25,30 @@
         <div class="row">
             <div class="col s4"></div>
             <center>
+
+                <!-- Register form -->
                 <form action="registerUser" method="POST" class="registerForm col s4">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="name" type="text" class="validate" name="name">
+                            <input id="name" type="text" class="validate" name="name" onkeyup="check()" required>
                             <label for="name">Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="email" type="text" class="validate" name="email">
+                            <input id="email" type="email" class="validate" name="email" onkeyup="check()" required>
                             <label for="email">Email</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="password" type="password" name="password" class="validate">
+                            <input id="password" type="password" name="password" class="validate" onkeyup="check()" required>
                             <label for="password">Password</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="cpassword" type="password" name="cpassword" class="validate" onkeyup="check()">
+                            <input id="cpassword" type="password" name="cpassword" class="validate" onkeyup="check()" required>
                             <label for="cpassword">Confirm Password</label>
                         </div>
                     </div>
@@ -57,6 +59,7 @@
                         <div class="col s4"></div>
                     </div>
                 </form>
+                
             </center>
         </div>
     </div>

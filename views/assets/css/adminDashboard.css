@@ -1,65 +1,80 @@
-#content
-	{
-		text-align: left;
-		margin-top: 150px;
-		margin-left: 200px;
+* {
+	margin: 0;
+	padding: 0;
+}
 
-	}
+body,html {
+	height: 100%;
+	width: 100%;
+}
 
-	.btn{
-				background-color: #06265b;
-				color: #ffffcc;
-				outline: 0px;
-                box-shadow: 10px 18px 15px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-                font-size: 18px;
-                padding-left: 10px;
-                padding-right: 10px;
+#content {
+	display: flex;
+	justify-content: space-around;
+	top: 85%;
+	left: 8%; 
+	position: absolute;
+	z-index: 2;
+}
 
-        }
+.btn {
+	background-color: #06265b;
+	color: #ffffcc;
+	outline: 0px;
+	box-shadow: 10px 18px 15px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	font-size: 18px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
-    .btn:hover{
-    	background-color: #ffffcc;
-    	color: #06265b;
-    }
+.btn:hover{
+	background-color: #ffffcc;
+	color: #06265b;
+}
 
+#heading {
+	color: #ffffcc;
+	font-family: "algerian";
+	text-align:left;
+	margin-left: 20%;
+}
 
-	#heading
-	{
-		color: #ffffcc;
-		font-family: "algerian";
-		text-align:left;
-		margin-top: 50px;
-		margin-left: 200px;
-	}
+#list {
+	text-align: left;
+	color: #ffffcc;
+}
 
-	#list
-	{
-		text-align: left;
-		margin-top:100px;
-		margin-left: 200px;	
-		color: #ffffcc;
+td,th {
+	padding: 5px 5px;
+}
 
-	}
+#logOut {
+	background-color:#06265b;
+	color: #ffffcc;
+	margin-left: 1100px;
+	font-size: 14px;
+	padding-right: 20px;
+	padding-left: 20px;	
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-radius: 10px;
+}
 
-	#logOut{
-				background-color:#06265b;
-				color: #ffffcc;
-				margin-left: 1100px;
-				font-size: 14px;
-				padding-right: 20px;
-				padding-left: 20px;	
-				padding-top: 5px;
-				padding-bottom: 5px;
-				border-radius: 10px;
-			}
+#welcome {
+	font-size: 15;
+	font-style: italic;
+	margin-top:60px;
+	margin-left: 30px;
+	color: #ffffcc;
+}
 
-	#welcome
-	{
-		font-size: 15;
-		font-style: italic;
-		margin-top:60px;
-		margin-left: 30px;
-		color: #ffffcc;
+#filterDiv {
+	position: relative;
+	left: 8%;
+}
 
-	}
+#leaderBoard {
+	position: relative;
+	top: -8%
+}
