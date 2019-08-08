@@ -1,7 +1,7 @@
 const mongoose = require('../database/mongo').mongoose
 const Schema = mongoose.Schema
 
-
+/* Schema for leader board collection */
 const leaderBoard = new Schema({
     userID:
     {

@@ -18,19 +18,15 @@ module.exports = (app) => {
 
     app.get('/quiz', quizController.quiz)
 
-    app.post('/getQuesCsit', quizController.quizIt)
-
-    app.post('/getQuesSports', quizController.quizSports)
-
-    app.post('/getQuesEntertainment', quizController.quizEntertainment)
-
-    app.post('/getQuesCurraf', quizController.quizCurraf)
+    app.get('/getQuestions', quizController.getQuestions)
 
     app.post('/checkAns', quizController.checkAns)
 
     app.post('/submitScore', quizController.submitScore)
 
     app.get('/admin', loginController.admin)
+
+    app.get('/adminSignOut', loginController.adminSignOut)
 
     app.post('/adminSignIn', loginController.adminSignIn)
 

@@ -1,31 +1,29 @@
-//jQuery time
-var current_fs, next_fs, previous_fs; //fieldsets
-var left, opacity, scale; //fieldset properties which we will animate
-var animating; //flag to prevent quick multi-click glitches
+let questions //to store the questions
+let synth = window.speechSynthesis; // Object for speech synthesis
+
+/* Set the score key in local storage to 0 */
 $(document).ready(() => {
-	console.log('set')
-	localStorage.setItem('score',0)
-})
-$(".submit").click(function () {
-	return false;
+	text = "Let's get started. Click begin to start the quiz"
+	play(text)
+	localStorage.setItem('score', 0)
 })
 
+/* Get questions from backend */
 function getQuestions() {
-	let urlPath = ''
-	if (window.location.href.endsWith('csit')) {
-		urlPath = "getQuesCsit"
-	}else if (window.location.href.endsWith('currAff')) {
-		urlPath = "getQuesCurraf"
-	}else if (window.location.href.endsWith('sports')) {
-		urlPath = "getQuesSports"
-	}else if (window.location.href.endsWith('entertainment')) {
-		urlPath = "getQuesEntertainment"
-	}
 	$.ajax({
-		url: urlPath,
-		method: 'post',
+		url: 'getQuestions',
+		method: 'get',
+		data : {
+			category : getCategory
+		},
+		beforeSend: function () {
+			$('#loading').show();
+		},
+		complete: function () {
+			$('#loading').hide();
+		},
 		success: (res) => {
-			console.log(res)
+			questions = res
 			i = 0
 			for (question of res) {
 				let fieldset = '<fieldset class="field' + i + '" ><h3 class="question" id="' + question.Qid + '">' + question.Question + '' +
@@ -40,21 +38,45 @@ function getQuestions() {
 			}
 			$('#start').fadeOut()
 			$('#questionContainer').fadeIn()
+			startTimer()
+			const text = formQuestionText(0)
+			play(text)
 		}
 	})
 }
 
-function checkAns(id, i) {
+/* Converts and plays the text
+@Param text : Text to be converted into speech and played
+*/
+function play(text) {
+	synth.cancel()
+	let utterThis = new SpeechSynthesisUtterance(text);
+	utterThis.voice = synth.getVoices()[1]
+	utterThis.pitch = 1
+	utterThis.rate = 1
+	synth.speak(utterThis)
+}
 
-	if (window.location.href.endsWith('csit')) {
-		cat = "csit"
-	}else if (window.location.href.endsWith('currAff')) {
-		cat = "currAff"
-	}else if (window.location.href.endsWith('sports')) {
-		cat = "sports"
-	}else if (window.location.href.endsWith('entertainment')) {
-		cat = "entertainment"
-	}
+/* Helper function to format the question into text
+@Param i : index of the question
+
+@return text : formatted text
+*/
+function formQuestionText(i) {
+	const text = questions[i].Question +
+		'A. ' + questions[i].op1 + '. ' +
+		'B. ' + questions[i].op2 + '. ' +
+		'C. ' + questions[i].op3 + '. ' +
+		'D. ' + questions[i].op4
+	return text
+}
+
+/* Check selected answer to be true from backend
+@Param id : Question-id
+@Param i : Index of fieldset
+*/
+function checkAns(id, i) {
+	let cat = getCategory
 	$.ajax({
 		url: 'checkAns',
 		method: 'post',
@@ -63,13 +85,21 @@ function checkAns(id, i) {
 			answer: $("input[name=" + id + "]:checked").val(),
 			category: cat
 		},
+		beforeSend: function () {
+			$('#loading').show();
+		},
+		complete: function () {
+			$('#loading').hide();
+		},
 		success: (res) => {
 			if (res) {
 				let score = parseInt(localStorage.getItem('score')) + 5
-				localStorage.setItem('score',score)
+				localStorage.setItem('score', score)
+				let current_fs, next_fs //fieldsets
+				let left, opacity, scale //fieldset properties which we will animate
+				let animating //flag to prevent quick multi-click glitches
 				if (animating) return false;
 				animating = true;
-
 				current_fs = $('.field' + i)
 				i += 1
 				next_fs = $('.field' + i)
@@ -104,67 +134,108 @@ function checkAns(id, i) {
 					//this comes from the custom easing plugin
 					easing: 'easeInOutBack'
 				});
+				const text = formQuestionText(i)
+				play(text)
 			}
-			else{
+			else {
 				submit()
 			}
 		}
 	})
 }
 
-function submit(){
-	console.log(localStorage.getItem('score'))
+/* To get the category
+@return category : category of question selected
+*/
+function getCategory() {
+	let category
+	if (window.location.href.endsWith('csit')) {
+		category = "csit"
+	} else if (window.location.href.endsWith('currAff')) {
+		category = "currAff"
+	} else if (window.location.href.endsWith('sports')) {
+		category = "sports"
+	} else if (window.location.href.endsWith('entertainment')) {
+		category = "entertainment"
+	}
+	return category
+}
+
+/* Sends the final score to the backend */
+function submit() {
+	text = "PLease hold on. Submitting your final score. Thank You"
+	play(text)
 	if (window.location.href.endsWith('csit')) {
 		cat = "csit"
-	}else if (window.location.href.endsWith('currAff')) {
+	} else if (window.location.href.endsWith('currAff')) {
 		cat = "currAff"
-	}else if (window.location.href.endsWith('sports')) {
+	} else if (window.location.href.endsWith('sports')) {
 		cat = "sports"
-	}else if (window.location.href.endsWith('entertainment')) {
+	} else if (window.location.href.endsWith('entertainment')) {
 		cat = "entertainment"
 	}
 	$.ajax({
-		url : 'submitScore',
-		method : 'post',
-		data : {
-			score : localStorage.getItem('score'),
-			category : cat
+		url: 'submitScore',
+		method: 'post',
+		data: {
+			score: localStorage.getItem('score'),
+			category: cat
 		},
-		success : (res) => {
-			if(res){
-				toastr.options.onShown = function() { console.log('hello'); }
-				toastr.options.onHidden = function() { 
+		beforeSend: function () {
+			$('#loading').show();
+		},
+		complete: function () {
+			$('#loading').hide();
+		},
+		success: (res) => {
+			if (res) {
+				toastr.options.onShown = function () { $('#loading').show(); }
+				toastr.options.onHidden = function () {
+					$('#loading').hide();
 					localStorage.clear()
-					window.location.href = 'dashboard' }
+					window.location.href = 'dashboard'
+				}
 				toastr["success"]("Your Score is: " + localStorage.getItem('score'))
-			}else{
+			} else {
 				toastr["error"]("Something Went Wrong")
-				window.location.href = 'dashboard'	
+				window.location.href = 'dashboard'
 			}
 		}
 	})
 }
 
-var time_in_minutes = 2;
-var current_time = Date.parse(new Date());
-var deadline = new Date(current_time + time_in_minutes*60*1000);
-
-
-function time_remaining(endtime){
-	var t = Date.parse(endtime) - Date.parse(new Date());
-	var seconds = Math.floor( (t/1000) % 60 );
-	var minutes = Math.floor( (t/1000/60) % 60 );
-	return {seconds,minutes};
+/* Initializes and start the timer */
+function startTimer() {
+	let time_in_minutes = 2;
+	let current_time = Date.parse(new Date());
+	let deadline = new Date(current_time + time_in_minutes * 60 * 1000);
+	runTimer('clockdiv', deadline);
 }
 
-function run_clock(id,endtime){
-	var clock = document.getElementById(id);
-	function update_clock(){
-		var t = time_remaining(endtime);
-		clock.innerHTML = "Time  "+t.minutes+":"+t.seconds;
-		if(t.minutes==0 & t.seconds==0){ clearInterval(timeinterval); submit(); }
+/* Calculates the remaining time
+@Param endtime : Time at which the timer stops
+
+@return seconds : Seconds at which the timer will stop
+@return minutes : Minutes at which the timer will stop 
+*/
+function timeRemaining(endtime) {
+	let t = Date.parse(endtime) - Date.parse(new Date());
+	let seconds = Math.floor((t / 1000) % 60);
+	let minutes = Math.floor((t / 1000 / 60) % 60);
+	return { seconds, minutes };
+}
+
+/* Runs timer
+@Param id : id of the element containing the timer
+@Param endtime : Time at which the timer stops
+*/
+function runTimer(id, endtime) {
+	let clock = document.getElementById(id);
+	function updateClock() {
+		let t = timeRemaining(endtime);
+		clock.innerHTML = "Time  " + t.minutes + ":" + t.seconds;
+		if (t.minutes == 0 & t.seconds == 0) { clearInterval(timeinterval); submit(); }
 	}
-	update_clock(); // run function once at first to avoid delay
-	var timeinterval = setInterval(update_clock,1000);
+	updateClock(); // run function once at first to avoid delay
+	let timeinterval = setInterval(updateClock, 1000);
 }
-run_clock('clockdiv',deadline);
