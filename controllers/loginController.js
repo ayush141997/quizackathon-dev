@@ -16,7 +16,7 @@ const register = (req, res) => {
     }
 }
 
-const registerUser =async (req,res) => {
+const registerUser = async (req,res) => {
     const signInData = signInFormat(req.body)
     const result = await service.register(signInData)
     if(result){

@@ -1,22 +1,23 @@
-$(document).ready(()=>{
+$(document).ready(() => {
     $.ajax({
-        url : 'leaderBoard',
-        method : 'post',
-        success : (res) => {
+        url: 'leaderBoard',
+        method: 'post',
+        success: (res) => {
             let row = '<thead><th>S.no</th><th>Name</th><th>Category</th><th>Score</th></thead>'
-            let i=1
-            for(record of res){
+            let i = 1
+            for (record of res) {
                 let cat
-                if(record.category == "csit"){
-                    cat = "Information Technology"
-                }else if(record.category == "sports"){
-                    cat = "Sports"
-                }else if(record.category == "currAff"){
-                    cat = "Current Affairs"
-                }else{
-                    cat = "Entertainment"
+                switch (record.category) {
+                    case "csit": cat = "Information Technology"
+                        break
+                    case "sports": cat = "Sports"
+                        break
+                    case "currAff": cat = "Current Affairs"
+                        break
+                    default: cat = "Entertainment"
+                        break;
                 }
-                row += '<tr><td>'+ i +'</td><td>'+ record.name +'</td><td>'+ cat +'</td><td>'+ record.score +'</td></tr>'
+                row += '<tr><td>' + i + '</td><td>' + record.name + '</td><td>' + cat + '</td><td>' + record.score + '</td></tr>'
                 makeList(i)
                 i++
             }
@@ -26,17 +27,17 @@ $(document).ready(()=>{
 })
 
 var list = new Array();
-    var pageList = new Array();
-    var currentPage = 1;
-    var numberPerPage = 10;
-    var numberOfPages = 0;
+var pageList = new Array();
+var currentPage = 1;
+var numberPerPage = 10;
+var numberOfPages = 0;
 
 function makeList(x) {
     list.push(x);
 
     numberOfPages = getNumberOfPages();
 }
-    
+
 function getNumberOfPages() {
     return Math.ceil(list.length / numberPerPage);
 }
@@ -69,7 +70,7 @@ function loadList() {
     drawList();
     check();
 }
-    
+
 function drawList(row) {
     document.getElementById("list").innerHTML = "";
     for (r = 0; r < pageList.length; r++) {
@@ -88,5 +89,5 @@ function load() {
     makeList();
     loadList();
 }
-    
+
 window.onload = load;
