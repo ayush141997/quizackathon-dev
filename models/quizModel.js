@@ -1,6 +1,7 @@
 const mongoose = require('../database/mongo').mongoose
 const Schema = mongoose.Schema
 
+/* Schema for information technology category collection */
 const CSIT = new Schema({
     Question : {
         type : 'String',
@@ -39,6 +40,7 @@ const CSIT = new Schema({
 
 })
 
+/* Schema for entertainment category collection */
 const Entertainment = new Schema({
     Question : {
         id: "Number",
@@ -77,7 +79,7 @@ const Entertainment = new Schema({
 
 })
 
-
+/* Schema for sports category collection */
 const Sports = new Schema({
     Question : {
         id: "Number",
@@ -117,6 +119,7 @@ const Sports = new Schema({
 
 })
 
+/* Schema for current affairs category collection */
 const CurrAf = new Schema({
     Question : {
         id: "Number",

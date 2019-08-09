@@ -1,30 +1,71 @@
-<!--DOCTYPE HTML-->
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-		<link rel="stylesheet" type="text/css" href="./assets/css/adminDashboard.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/adminDashboard.css">
 </head>
-<body background = "./assets/images/export.png">
-	<label id= "welcome"> Welcome </label>
-	<input id="logOut" type="button" value="LogOut" onclick="javascript:void(window.location.href = 'admin')"> 
-	<h1 id="heading"> LeaderBoard</h1> 
-	<div>
-		<table id="list"></table>
-	</div>
-    <div id="content">
-    <input type="button" class="btn" id="first" onclick="firstPage()" value="first" />
-    <input type="button" class="btn" id="next" onclick="nextPage()" value="next" />
-    <input type="button" class="btn" id="previous" onclick="previousPage()" value="previous" />
-    <input type="button" class="btn" id="last" onclick="lastPage()" value="last" />
-	</div>
-    
-    
-</body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="./assets/js/adminDashboard.js">
-    
-</script>
+<body background="./assets/images/export.png">
+	<!-- Welocome label -->
+	<label id="welcome"> Welcome </label>
+	
+	<!-- Logout button -->
+	<input id="logOut" type="button" value="LogOut" onclick="javascript:void(window.location.href = 'adminSignout')">
+	
+	<!-- Leaderboard starts -->
+	<h4 id="heading"> LeaderBoard</h4>
+	<div class="row" id="filterDiv">
+		<div class="col s5">
+			<div class="row">
+				<!-- Filteration -->
+				<div class="input-field col s5">
+					<select onchange="filter(this.value)">
+						<option value="" selected>Choose your category</option>
+						<option value="csit">Information Technology</option>
+						<option value="sports">Sports</option>
+						<option value="currAff">Current Affairs</option>
+						<option value="entertainment">Entertainment</option>
+					</select>
+					<label>Filter by Category</label>
+				</div>
+				
+				<!-- Sorting -->
+				<div class="input-field col s5">
+					<select onchange="sort(this.value)">
+						<option value="-1" selected>Descending</option>
+						<option value="1">Ascending</option>
+					</select>
+					<label>Sort</label>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	
+	<!-- Records -->
+	<div class="row" id="leaderBoard">
+		<div class="col s1"></div>
+		<table id="list" class="striped col s4"></table>
+	</div>
+	
+	<!-- Page swap buttons -->
+	<div class="row">
+		<div id="content" class="col s4">
+			<input type="button" class="btn" id="first" onclick="firstPage()" value="first" />
+			<input type="button" class="btn" id="next" onclick="nextPage()" value="next" />
+			<input type="button" class="btn" id="previous" onclick="previousPage()" value="previous" />
+			<input type="button" class="btn" id="last" onclick="lastPage()" value="last" />
+		</div>
+	</div>
+	<!-- Leaderboard ends -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="./assets/js/adminDashboard.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
 
 </html>
