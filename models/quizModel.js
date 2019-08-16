@@ -7,7 +7,6 @@ const CSIT = new Schema({
         type : 'String',
         required : true
     },
-
     Qid:
     {
         type : 'String',
@@ -28,7 +27,6 @@ const CSIT = new Schema({
         
         required : true
     },
-
     op4: {
         type : 'String',
         required : true
@@ -37,7 +35,6 @@ const CSIT = new Schema({
         type : 'String',
         required : true
     }
-
 })
 
 /* Schema for entertainment category collection */
