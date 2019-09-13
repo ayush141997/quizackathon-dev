@@ -4,10 +4,10 @@ const service = require('../services/quizService') // To import the quiz service
 @Param req : request object
 @Param res : response object
 */
-const quiz = (req,res) => {
-    if(req.session.userId){
+const quiz = (req, res) => {
+    if (req.session.userId) {
         res.render('questions')
-    }else{
+    } else {
         res.redirect('index')
     }
 }
@@ -17,8 +17,13 @@ const quiz = (req,res) => {
 @Param res : response object
 */
 const getQuestions = async (req, res) => {
-    const category = req.query.category
-    const ques = await service.getQuestions(category)
+    const data = {
+        role: req.body.role,
+        name: req.session.userName ? req.session.userName : '',
+        userID: req.session.userId ? req.session.userId : '',
+        quizId: req.body.quizId
+    }
+    const ques = await service.getQuestions(data)
     res.send(ques)
 }
 
@@ -28,7 +33,7 @@ const getQuestions = async (req, res) => {
 */
 const checkAns = async (req, res) => {
     const exAns = ansFormat(req.body)
-    const result = await service.checkAns(exAns)
+    const result = await service.checkAns(exAns, req.session.userId)
     res.send(result)
 }
 
@@ -37,31 +42,22 @@ const checkAns = async (req, res) => {
 
 @return : formatted data
 */
-function ansFormat(data){
-    return {qid, answer, category} = data
-}
-
-/* To format score data according to suitable format
-@Param data : data from the frontend
-
-@return : formatted data
-*/
-function scoreFormat(data){
-    return {score, category} = data
+function ansFormat(data) {
+    return { qid, answer } = data
 }
 
 /* To submit score into database
 @Param req : request object
 @Param res : response object
 */
-const submitScore = async (req,res) => {
-    const scoreData = scoreFormat(req.body)
+const submitScore = async (req, res) => {
+    const scoreData = {}
     scoreData.name = req.session.userName
     scoreData.userID = req.session.userId
     const result = await service.submitScore(scoreData)
-    if(result){
+    if (result) {
         res.send(true)
-    }else{
+    } else {
         res.send(false)
     }
 }
@@ -71,11 +67,70 @@ const submitScore = async (req,res) => {
 @Param res : response object
 */
 const leaderBoard = async (req, res) => {
-    data = req.body.category
+    data = req.body.quizId
     const result = await service.leaderBoard(data)
-    if(result){
+    if (result) {
         res.send(result)
+        return
     }
+    res.send ({
+        status: 404
+    })
+}
+
+const addQuestion = async (req, res) => {
+    data = req.body
+    let response = await service.addQuestion(data)
+    if (response) {
+        res.send({
+            status: 200,
+            data: response
+        })
+        return
+    }
+    res.send({
+        status: 500
+    })
+}
+
+const deleteQuestion = async (req, res) => {
+    id = req.body.qid
+    let response = await service.deleteQuestion(id)
+    if (response) {
+        res.send({
+            status: 200,
+            data: response
+        })
+        return
+    }
+    res.send({
+        status: 500
+    })
+}
+
+const getQuestionById = async (req, res) => {
+    let id = req.query.id
+    let response = await service.getQuestionById(id)
+    res.send(response)
+}
+
+const getQuizes = async (req, res) => {
+    let response = await service.getQuizes()
+    res.send(response)
+}
+
+const addQuiz = async (req, res) => {
+    let quiz = {}
+    quiz.name = req.body.name
+    quiz.status = 'Ongoing'
+    let response = await service.addQuiz(quiz)
+    res.send(response)
+}
+
+const endQuiz = async (req, res) => {
+    let id = req.body.id
+    let response = await service.endQuiz(id)
+    res.send(response)
 }
 
 module.exports = {
@@ -83,5 +138,11 @@ module.exports = {
     checkAns,
     submitScore,
     leaderBoard,
-    getQuestions
+    getQuestions,
+    addQuestion,
+    deleteQuestion,
+    getQuestionById,
+    getQuizes,
+    addQuiz,
+    endQuiz
 }

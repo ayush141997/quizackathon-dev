@@ -1,13 +1,13 @@
-const service =  require('../services/loginService') // import the login service
+const service = require('../services/loginService') // import the login service
 
 /* Entry function to show the login page
 @Param req : request object
 @Param res : response object
 */
 const index = (req, res) => {
-    if(req.session.userId){
+    if (req.session.userId) {
         res.redirect('dashboard')
-    }else{
+    } else {
         res.render('signIn')
     }
 }
@@ -17,9 +17,9 @@ const index = (req, res) => {
 @Param res : response object
 */
 const register = (req, res) => {
-    if(req.session.userId){
+    if (req.session.userId) {
         res.redirect('dashboard')
-    }else{
+    } else {
         res.render('register')
     }
 }
@@ -28,15 +28,15 @@ const register = (req, res) => {
 @Param req : request object
 @Param res : response object
 */
-const registerUser =async (req,res) => {
+const registerUser = async (req, res) => {
     const signInData = signInFormat(req.body)
     const result = await service.register(signInData)
-    if(result){
+    if (result) {
         req.session.userId = result._id
         req.session.userName = result.name
         res.render('dashboard')
-    }else{
-        res.redirect('register?'+false)
+    } else {
+        res.redirect('register?' + false)
     }
 }
 
@@ -44,22 +44,22 @@ const registerUser =async (req,res) => {
 @Param req : request object
 @Param res : response object
 */
-const signIn = async (req,res) => {
+const signIn = async (req, res) => {
     const signInData = signInFormat(req.body)
     const result = await service.signIn(signInData)
-    if(result.auth){
+    if (result.auth) {
         req.session.userId = result.id
         req.session.userName = result.name
-        if(signInData.mode == 'normal'){
+        if (signInData.mode == 'normal') {
             res.redirect('dashboard')
-        }else{
+        } else {
             res.send(true)
         }
     }
-    else{
-        if(signInData.mode == 'normal'){
-            res.redirect('index?'+result.res)
-        }else{
+    else {
+        if (signInData.mode == 'normal') {
+            res.redirect('index?' + result.res)
+        } else {
             res.send(false)
         }
     }
@@ -70,12 +70,12 @@ const signIn = async (req,res) => {
 @Param res : response object
 */
 const dashboard = (req, res) => {
-    if(req.session.userId){
+    if (req.session.userId) {
         res.render('dashboard')
-    }else {
+    } else {
         res.redirect('index')
     }
-    
+
 }
 
 /* To format the sign in data according to database format
@@ -105,10 +105,10 @@ const signOut = (req, res) => {
 @Param req : request object
 @Param res : response object
 */
-const admin = (req,res) => {
-    if(req.session.adminId){
+const admin = (req, res) => {
+    if (req.session.adminId) {
         res.redirect('adminDashboard')
-    }else{
+    } else {
         res.render('adminLogin')
     }
 }
@@ -117,16 +117,19 @@ const admin = (req,res) => {
 @Param req : request object
 @Param res : response object
 */
-const adminSignIn = (req,res) => {
+const adminSignIn = async (req, res) => {
     const email = req.body.email
     const password = req.body.password
-    const result = service.adminSignIn(email,password)
-    if(result){
+    const result = await service.adminSignIn(email, password)
+    if (result.status) {
         req.session.adminId = 'admin'
+        if (result.quizId) {
+            req.session.quizId = result.quizId
+        }
         res.redirect('adminDashboard')
-    }else{
-        res.redirect('admin?false')
+        return
     }
+    res.redirect('admin?false')
 }
 
 /* To sign out the admin
@@ -142,13 +145,13 @@ const adminSignOut = (req, res) => {
 @Param req : request object
 @Param res : response object
 */
-const adminDashboard = (req,res) => {
-    if(req.session.adminId){
+const adminDashboard = (req, res) => {
+    if (req.session.adminId) {
         res.render('adminDashboard')
-    }else{
+    } else {
         res.redirect('admin')
     }
-    
+
 }
 
 module.exports = {

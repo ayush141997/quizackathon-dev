@@ -18,7 +18,7 @@ module.exports = (app) => {
 
     app.get('/quiz', quizController.quiz)
 
-    app.get('/getQuestions', quizController.getQuestions)
+    app.post('/getQuestions', quizController.getQuestions)
 
     app.post('/checkAns', quizController.checkAns)
 
@@ -33,4 +33,16 @@ module.exports = (app) => {
     app.get('/adminDashboard', loginController.adminDashboard)
 
     app.post('/leaderBoard',quizController.leaderBoard)
+
+    app.post('/addQuestion', quizController.addQuestion)
+
+    app.post('/delQuestion', quizController.deleteQuestion)
+
+    app.get('/getQuestionById', quizController.getQuestionById)
+
+    app.get('/getQuizes', quizController.getQuizes)
+
+    app.post('/addQuiz', quizController.addQuiz)
+
+    app.post('/endQuiz', quizController.endQuiz)
 }

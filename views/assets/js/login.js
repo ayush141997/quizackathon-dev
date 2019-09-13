@@ -13,7 +13,7 @@ function onSignIn(googleUser) {
         success: (res) => {
             console.log(res)
             if (res) {
-                window.location.href = "dashboard"
+                window.location.href = "quiz"
             }
         }
     })

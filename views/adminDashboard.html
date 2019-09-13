@@ -7,52 +7,62 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./assets/css/adminDashboard.css">
 </head>
 
 <body background="./assets/images/export.png">
-	<!-- Welocome label -->
-	<label id="welcome"> Welcome </label>
-	
-	<!-- Logout button -->
-	<input id="logOut" type="button" value="LogOut" onclick="javascript:void(window.location.href = 'adminSignout')">
-	
+	<nav>
+		<div class="nav-wrapper navbar-fixed">
+			<a href="#" class="brand-logo"><img id="logo" src="./assets/images/quantiphi.png" alt="" /></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li>
+					<div class="input-field col s5">
+						<select onchange="setQuizId(this.value)" id="quizes">
+							<option value="" disabled selected>Choose a quiz</option>
+							<option value="new" id="newQuiz">Start a new quiz</option>
+						</select>
+					</div>
+				</li>
+				<li>
+					<input class="btn" type="button" value="End Quiz" disabled id="endQuiz">
+				</li>
+				<li>
+					<input class="btn" type="button" value="Questions"
+						onclick="javascript:void(window.location.href = 'adminQuestions.html')">
+				</li>
+				<li>
+					<input class="btn" type="button" value="LogOut"
+						onclick="javascript:void(window.location.href = 'adminSignout')">
+				</li>
+			</ul>
+		</div>
+	</nav>
+
 	<!-- Leaderboard starts -->
 	<h4 id="heading"> LeaderBoard</h4>
 	<div class="row" id="filterDiv">
 		<div class="col s5">
 			<div class="row">
-				<!-- Filteration -->
-				<div class="input-field col s5">
-					<select onchange="filter(this.value)">
-						<option value="" selected>Choose your category</option>
-						<option value="csit">Information Technology</option>
-						<option value="sports">Sports</option>
-						<option value="currAff">Current Affairs</option>
-						<option value="entertainment">Entertainment</option>
-					</select>
-					<label>Filter by Category</label>
-				</div>
-				
 				<!-- Sorting -->
-				<div class="input-field col s5">
+				<div id="sort" class="input-field col s5">
 					<select onchange="sort(this.value)">
 						<option value="-1" selected>Descending</option>
 						<option value="1">Ascending</option>
 					</select>
 					<label>Sort</label>
 				</div>
-			
+
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Records -->
 	<div class="row" id="leaderBoard">
 		<div class="col s1"></div>
 		<table id="list" class="striped col s4"></table>
 	</div>
-	
+
 	<!-- Page swap buttons -->
 	<div class="row">
 		<div id="content" class="col s4">
@@ -62,7 +72,19 @@
 			<input type="button" class="btn" id="last" onclick="lastPage()" value="last" />
 		</div>
 	</div>
+
 	<!-- Leaderboard ends -->
+	<div id="modal1" class="modal">
+		<a class="modal-close waves-effect waves-green" id="close"> <i class="material-icons">close</i></a>
+		<div class="modal-content">
+			<form>
+				<strong>Quiz Name:</strong> <input type="text" id="qName">
+			</form>
+		</div>
+		<div class="modal-footer">
+			<a class="modal-close btn waves-effect waves-green btn-flat" onclick="addQuiz()">Submit</a>
+		</div>
+	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="./assets/js/adminDashboard.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

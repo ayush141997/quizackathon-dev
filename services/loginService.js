@@ -1,6 +1,6 @@
 const user = require('../models/loginModel').user
 const bcrypt = require('bcrypt-nodejs')
-
+const quiz = require('../models/quizModel').quizes
 /* Generate hash for the password
 @Param password : password in string format
 
@@ -30,7 +30,7 @@ class LoginService {
             }
             else {
 
-                if (!(bcrypt.compareSync(data.password,response.password))) {
+                if (!(bcrypt.compareSync(data.password, response.password))) {
                     return { auth: false, res: 'false' }
                 } else {
                     return { auth: true, id: response._id, name: response.name }
@@ -40,11 +40,11 @@ class LoginService {
         else if (data && data.mode == 'google') {
             //push the data into db
             let response = await user.find({ uid: data.uid })
-            if (!response) {
-                const newUser = user(data)
-                await newUser.save()
+            if (response.length === 0) {
+                const result = await user.insertMany([data])
+                console.log(result)
             }
-            return { auth: true, id: data.uid , name: data.name}
+            return { auth: true, id: data.uid, name: data.name }
         }
         return { auth: false, res: "false" }
     }
@@ -72,12 +72,23 @@ class LoginService {
 
     @return (Boolean) : authorization
     */
-    adminSignIn(email,password){
-        if(email == "admin@quantiphi.com" && 
-        bcrypt.compareSync(password,'$2a$08$uStPk.jjPWpYqTQ1per6Ye/gl7ePQvPz3IzuqZhyQ7lPyFcvLIu4q')){
-            return true
-        }else {
-            return false
+    async adminSignIn(email, password) {
+        if (email == "admin@quantiphi.com" &&
+            bcrypt.compareSync(password, '$2a$08$uStPk.jjPWpYqTQ1per6Ye/gl7ePQvPz3IzuqZhyQ7lPyFcvLIu4q')) {
+            let ongoingQuiz = await quiz.findOne({ status: 'Ongoing' }, { _id: 1 })
+            if (ongoingQuiz) {
+                return {
+                    status: true,
+                    quizId: ongoingQuiz._id
+                }
+            }
+            return {
+                status: true
+            }
+        } else {
+            return {
+                status: false
+            }
         }
     }
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./assets/css/adminQuestion.css">
+</head>
+
+<body>
+    <div id="loading">
+        <img id="loading-image" src="./assets/images/preloader.gif" alt="Loading..." />
+    </div>
+    <div class="row">
+        <form id="addQuestion" class="col s6" method="POST">
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="question" class="materialize-textarea" name="Question"></textarea>
+                    <label for="question">Question</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="option1" type="text" class="validate" name="op1">
+                    <label for="option1">Option 1</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="option2" type="text" class="validate" name="op2">
+                    <label for="option2">Option 2</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="option3" type="text" class="validate" name="op3">
+                    <label for="option3">Option 3</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="option4" type="text" class="validate" name="op4">
+                    <label for="option4">Option 4</label>
+                </div>
+                <div class="input-field col s12">
+                    <select name="Ans" id="ans">
+                        <option value="" disabled selected>Choose your option</option>
+                        <option value="op1">Option 1</option>
+                        <option value="op2">Option 2</option>
+                        <option value="op3">Option 3</option>
+                        <option value="op4">Option 4</option>
+                    </select>
+                    <label>Select answer</label>
+                </div>
+                <center>
+                    <button class="btn waves-effect waves-light" onclick="addQuestion()" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </center>
+            </div>
+            <input type="hidden" id="quesId" value="" name="quesId">
+        </form>
+        <div class="col s6 ques">
+            <table id="questions"></table>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./assets/js/adminQuestion.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

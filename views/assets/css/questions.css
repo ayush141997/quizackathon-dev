@@ -12,6 +12,26 @@ body {
   background: transparent;
 }
 
+#welcome {
+  font-size: 15;
+  font-style: italic;
+  margin-top: 60px;
+  margin-left: 30px;
+  color: #ffffcc;
+}
+
+#logOut {
+  background-color: #06265b;
+  color: #ffffcc;
+  margin-left: 1000px;
+  font-size: 14px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 10px;
+}
+
 #loading {
   width: 100%;
   height: 100%;

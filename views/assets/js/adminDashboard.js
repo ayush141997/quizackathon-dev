@@ -2,11 +2,13 @@ let list = [] // list to store the results
 let currentPage = 1; // to track the current page
 let numberPerPage = 10; // number of records in one page
 let numberOfPages = 0; // total number of pages
-
-$(document).ready(() => {
-    $('select').formSelect()
+let modal
+document.addEventListener('DOMContentLoaded', function () {
     filter()
-})
+    getQuizes()
+    let elems = document.querySelectorAll('.modal');
+    modal = M.Modal.init(elems);
+});
 
 // Set the number of pages to be made
 function setNumberOfPages() {
@@ -52,20 +54,10 @@ function loadList() {
 @Param index : index of the user 
 */
 function drawList(pageList, index) {
-    const head = '<thead><th>S.No</th><th>Name</th><th>Category</th><th>Score</th></thead>'
+    const head = '<thead><th>S.No</th><th>Name</th><th>Score</th></thead>'
     let row = ''
     for (record of pageList) {
-        let category
-        if (record.category == "csit") {
-            category = "Information Technology"
-        } else if (record.category == "sports") {
-            category = "Sports"
-        } else if (record.category == "currAff") {
-            category = "Current Affairs"
-        } else {
-            category = "Entertainment"
-        }
-        row += '<tr><td>' + index + '</td><td>' + record.name + '</td><td>' + category + '</td><td>' + record.score + '</td></tr>'
+        row += '<tr><td>' + index + '</td><td>' + record.name + '</td><td>' + record.score + '</td></tr>'
         index++
     }
     document.getElementById("list").innerHTML = head + row;
@@ -80,11 +72,11 @@ function check() {
 }
 
 // To sort the records
-function sort(order){
-    list.sort(function(a,b) {
-        if(order == 1){
+function sort(order) {
+    list.sort(function (a, b) {
+        if (order == 1) {
             return a.score - b.score
-        }else{
+        } else {
             return b.score - a.score
         }
     })
@@ -93,17 +85,98 @@ function sort(order){
 }
 
 // To filter and get the records from backend
-function filter(category){
+function filter() {
     $.ajax({
         url: 'leaderBoard',
-        data : {
-            category : category
+        data: {
+            quizId: localStorage.getItem('quizId')
         },
         method: 'post',
         success: (res) => {
-            list = res
-            setNumberOfPages()
-            loadList()
+            if (!res.status) {
+                list = res
+                setNumberOfPages()
+                loadList()
+            } else {
+                console.log(res);
+                document.getElementById("next").disabled = true
+                document.getElementById("previous").disabled = true
+                document.getElementById("first").disabled = true
+                document.getElementById("last").disabled = true
+                document.getElementById("list").innerHTML = "No record to show"
+                $('#sort').fadeOut()
+            }
+
+        }
+    })
+}
+
+function getQuizes() {
+    $.ajax({
+        url: 'getQuizes',
+        method: 'get',
+        success: (res) => {
+            // console.log(res)
+            if (res.status === 200) {
+                res.quizes.forEach(quiz => addOption(quiz))
+            }
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        }
+    })
+}
+
+function setQuizId(val) {
+    if (val === "new") {
+        modal[0].open()
+    } else {
+        localStorage.setItem('quizId', val)
+        filter()
+    }
+}
+
+function addQuiz() {
+    $.ajax({
+        url: 'addQuiz',
+        method: 'post',
+        data: {
+            name: $('#qName').val()
+        },
+        success: (res) => {
+            console.log(res)
+            if (res.status === 200) {
+                addOption(res.quiz)
+            }
+        }
+    })
+}
+
+function addOption(quizOption) {
+    let option = `<option value="${quizOption._id}">${quizOption.name}</option>`
+    $('#quizes').append(option)
+    if (quizOption.status === "Ongoing") {
+        $('#newQuiz').prop('disabled','true')
+        $('#endQuiz').removeAttr('disabled')
+        $('#endQuiz').attr('onclick',`endQuiz('${quizOption._id}')`)
+        $('#quizes').val(quizOption._id)
+        localStorage.setItem('quizId', quizOption._id)
+    } else if(localStorage.getItem('quizId')){
+        $('#quizes').val(localStorage.getItem('quizId'))
+    }
+    var elems = document.querySelectorAll('#quizes');
+    var instances = M.FormSelect.init(elems);
+}
+
+function endQuiz(id){
+    $.ajax({
+        url: 'endQuiz',
+        method: 'post',
+        data: {
+            id: id
+        },
+        success: (res) => {
+            $('#endQuiz').prop('disabled','true')
+            alert('Quiz Ended')
         }
     })
 }

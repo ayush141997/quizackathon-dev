@@ -5,25 +5,24 @@ const Schema = mongoose.Schema
 const leaderBoard = new Schema({
     userID:
     {
-        type : 'String',
-        required : true
+        type: 'String',
+        required: true
     },
-
     name:
     {
-        type : 'String',
-        required : true
+        type: 'String',
+        required: true
     },
-    score : {
-        type : 'number',
-        required : true
+    score: {
+        type: 'number',
+        required: true
     },
-    category : {
-        type : 'String',   
-        required : true
+    quizId: {
+        type: 'String',
+        required: true
     }
 })
 
-module.exports =  {
+module.exports = {
     leaderBoard: mongoose.model('leaderBoard', leaderBoard),
 }
